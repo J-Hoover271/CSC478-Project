@@ -1,0 +1,57 @@
+# ---------- Java / compiled output ----------
+*.class
+out/
+bin/
+
+# Build tool output (harmless if unused)
+target/
+build/
+
+# Packaged files (share the JAR via GitHub Releases instead)
+*.jar
+*.war
+*.ear
+# ...but keep wrapper JARs if a build tool is added later
+!gradle/wrapper/gradle-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# Logs
+*.log
+
+# ---------- IntelliJ IDEA ----------
+# Personal / machine-specific files are ignored.
+# Shared project settings (.idea/misc.xml, modules.xml, *.iml, etc.) are kept
+# so everyone opens the project with the same setup.
+*.iws
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/shelf/
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/httpRequests/
+.idea/caches/
+.idea/sonarlint/
+.idea/.name
+
+# ---------- Other editors ----------
+.vscode/
+.classpath
+.project
+.settings/
+
+# ---------- Operating system ----------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
