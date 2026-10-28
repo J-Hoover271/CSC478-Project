@@ -1,0 +1,193 @@
+@startuml UNO_Simple
+title UNO Class Diagram
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+skinparam ArrowColor #1F2937
+skinparam ArrowThickness 1.75
+skinparam PackageBorderColor #1F2937
+skinparam PackageBorderThickness 1
+skinparam PackageBackgroundColor #F8FAFC
+skinparam nodesep 60
+skinparam ranksep 90
+
+package "uno.card" {
+    enum CardColor {
+        RED
+        BLUE
+        GREEN
+        YELLOW
+    }
+
+    enum CardValue {
+        ZERO
+        ONE
+        TWO
+        THREE
+        FOUR
+        FIVE
+        SIX
+        SEVEN
+        EIGHT
+        NINE
+        SKIP
+        REVERSE
+        DRAW_TWO
+        WILD
+        WILD_DRAW_FOUR
+    }
+
+    abstract class Card {
+        -color : CardColor
+        -value : CardValue
+
+        +Card(color : CardColor, value : CardValue)
+        +getColor() : CardColor
+        +getValue() : CardValue
+        +getPoints() : int
+        +isWild() : boolean
+        {abstract} +play() : void
+    }
+    class SkipCard {
+        {abstract} +play() : void
+    }
+    class ReverseCard {
+        {abstract} +play() : void
+    }
+    class DrawTwoCard {
+        {abstract} +play() : void
+    }
+    class WildCard {
+        {abstract} +play() : void
+    }
+    class WildDrawFourCard {
+        {abstract} +play() : void
+    }
+
+        Card <|-- SkipCard
+        Card <|-- ReverseCard
+        Card <|-- DrawTwoCard
+        Card <|-- WildCard
+        Card <|-- WildDrawFourCard
+
+        Card --> CardColor
+        Card --> CardValue
+}
+
+package "uno.model" {
+    class Deck {
+        -cards : List<Card>
+
+        +Deck()
+        +shuffle() : void
+        +draw() : Card
+        +isEmpty() : boolean
+        +restock(cards : List<Card>) : void
+    }
+    class DiscardPile {
+        -cards : List<Card>
+        -activeColor : CardColor
+
+        +place(card : Card) : void
+        +getTopCard() : Card
+        +getActiveColor() : CardColor
+        +setActiveColor(color : CardColor) : void
+        +refillDeck() : List<Card>
+    }
+    class Hand {
+        -cards : List<Card>
+
+        +add(card : Card) : void
+        +remove(card : Card) : void
+        +getCards() : List<Card>
+        +getTotalPoints() : int
+        +size() : int
+        +isEmpty() : boolean
+    }
+
+        Deck *-left- Card
+        DiscardPile o-left- Card
+        Hand o-- Card
+}
+
+package "uno.players" {
+    abstract class Player {
+        #name : String
+        #hand : Hand
+
+        +Player(name : String)
+        +getName() : String
+        +getHand() : Hand
+        {abstract} +isHuman() : boolean
+    }
+    class HumanPlayer {
+        {abstract} +isHuman() : boolean
+    }
+    class AIPlayer {
+        {abstract} +isHuman() : boolean
+    }
+
+        Player <|-right- HumanPlayer
+        Player <|-left- AIPlayer
+
+        Player *-left- Hand
+}
+
+package "uno.rules" {
+    class Scoreboard {
+        - {static} TARGET_SCORE : int = 500
+        - scores : Map<Player, Integer>
+
+        + addPoints(winner : Player, players : List<Player>) : int
+        + getScore(player : Player) : int
+        + hasWinner() : boolean
+        + getWinner() : Player
+    }
+    class MoveValidator {
+        +isLegalPlay(card : Card, top : Card, color : CardColor) : boolean
+        +hasPlayableCard(hand : Hand, top : Card, color : CardColor) : boolean
+    }
+}
+
+package "uno.game" {
+    enum Direction {
+        CLOCKWISE
+        COUNTER_CLOCKWISE
+    }
+
+    class Game {
+        -players : List<Player>
+        -scoreBoard : Scoreboard
+        -validator : MoveValidator
+        -currentRound : Round
+    }
+    class Round {
+        -players : List<Player>
+        -deck : Deck
+        -discardPile : DiscardPile
+        -direction : Direction
+
+    }
+
+        Game *-- Round
+        Game *-right- Scoreboard
+        Game *-- Player
+        Game -right-> MoveValidator
+
+
+        Round *-- Deck
+        Round *-- DiscardPile
+        Round --> Player
+        Round -up-> MoveValidator
+        Round -left-> Direction
+}
+
+package "uno.app" {
+    class main {
+        {static} +main(args : String[]) : void
+    }
+
+        main --> Game
+}
+@enduml
