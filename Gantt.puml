@@ -1,47 +1,47 @@
 @startgantt
 title UNO Project Timeline
-Project starts 2026-09-08
-printscale weekly with calendar date zoom 3
+Project starts 2026-10-24
 
-[Introductions and Design] lasts 14 days
 
-[Card Implementation] lasts 7 days
+[Introductions and Design] lasts 7 days
+
+[Card Implementation] lasts 3 days
 [Card Implementation] starts at [Introductions and Design]'s end
 
-[Card Testing and Doc] lasts 3 days
+[Card Testing and Doc] lasts 2 days
 [Card Testing and Doc] starts at [Card Implementation]'s end
 
-[Player Implementation] lasts 7 days
+[Player Implementation] lasts 4 days
 [Player Implementation] starts at [Card Testing and Doc]'s end
 
-[Player Testing and Doc] lasts 3 days
+[Player Testing and Doc] lasts 2 days
 [Player Testing and Doc] starts at [Player Implementation]'s end
 
-[Model Implementation] lasts 7 days
+[Model Implementation] lasts 3 days
 [Model Implementation] starts at [Player Testing and Doc]'s end
 
-[Model Testing and Doc] lasts 3 days
+[Model Testing and Doc] lasts 2 days
 [Model Testing and Doc] starts at [Model Implementation]'s end
 
-[Rules Implementation] lasts 7 days
+[Rules Implementation] lasts 3 days
 [Rules Implementation] starts at [Model Testing and Doc]'s end
 
-[Game Implementation] lasts 7 days
+[Game Implementation] lasts 3 days
 [Game Implementation] starts at [Rules Implementation]'s end
 
-[Game and Rules Testing and Doc] lasts 3 days
+[Game and Rules Testing and Doc] lasts 2 days
 [Game and Rules Testing and Doc] starts at [Game Implementation]'s end
 
-[UI Design] lasts 3 days
+[UI Design] lasts 2 days
 [UI Design] starts at [Game and Rules Testing and Doc]'s end
 
-[UI Implementation] lasts 7 days
+[UI Implementation] lasts 4 days
 [UI Implementation] starts at [UI Design]'s end
 
-[UI Testing] lasts 3 days
+[UI Testing] lasts 2 days
 [UI Testing] starts at [UI Implementation]'s end
 
-[UI Integration] lasts 3 days
+[UI Integration] lasts 2 days
 [UI Integration] starts at [UI Testing]'s end
 
 [Bug Fixes and Doc Touchup] lasts 7 days
