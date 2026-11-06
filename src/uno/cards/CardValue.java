@@ -1,6 +1,7 @@
 package uno.cards;
 
 public enum CardValue {
+    ZERO,
     ONE,
     TWO,
     THREE,

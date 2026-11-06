@@ -17,12 +17,16 @@ public abstract class Card {
         return value;
     }
 
+    /*
+    * This will be used for the scoring system that will happen
+    * At the end of rounds
+    */
     public int getPoints() {
-        return 0;
+        return CardPoints.getPoints(this.type);
     }
 
     public boolean isWild() {
-        return false;
+        return this.value == CardValue.WILD || this.value == CardValue.WILD_DRAW_FOUR;
     }
 
     abstract void play();
