@@ -4,6 +4,8 @@ import uno.cards.Card;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
+
 public class Deck {
     private ArrayList<Card> cards;
 
@@ -12,18 +14,25 @@ public class Deck {
     }
 
     public void shuffle() {
-
+        Collections.shuffle(cards);
     }
 
+    // remove(int index) returns the removed object
+    // if this is ever changed to remove(Object o)
+    // keep in mind that remove(Object o) does not return the removed element
     public Card draw() {
-        return null;
+        if (cards.isEmpty()) {
+            restock();
+        }
+        return cards.remove(cards.size() - 1);
     }
 
     public boolean isEmpty() {
-        return false;
+        return cards.isEmpty();
     }
 
-    public void restock(ArrayList<Card> cards) {
-
+    // to be used for restocking the deck from the drawpile
+    public void addCards(List<Card> cards) {
+        this.cards.addAll(cards);
     }
 }

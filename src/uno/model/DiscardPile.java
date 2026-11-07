@@ -14,11 +14,11 @@ public class DiscardPile {
     }
 
     public void place(Card card) {
-
+        cards.add(card);
     }
 
     public Card getTopCard() {
-        return null;
+        return cards.get(cards.size() - 1);
     }
 
     public CardColor getActiveColor() {
@@ -29,7 +29,16 @@ public class DiscardPile {
         this.activeColor = activeColor;
     }
 
-    public ArrayList<Card> refilDeck() {
-        return null;
+    public ArrayList<Card> getAllExceptTop() {
+        if (cards.size() <= 1) {
+            return new ArrayList<>();
+        }
+
+        List<Card> cardsToRecycle =
+                new ArrayList<>(cards.subList(0, cards.size() - 1));
+
+        cards.subList(0, cards.size() - 1).clear();
+
+        return cardsToRecycle;
     }
 }

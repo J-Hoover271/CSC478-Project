@@ -12,26 +12,30 @@ public class Hand {
     }
 
     public void add(Card card) {
-
+        cards.add(card);
     }
 
     public void remove(Card card) {
-
+        cards.remove(card);
     }
 
     public ArrayList<Card> getCards() {
-        return null;
+        return cards;
     }
 
     public int getTotalPoints() {
-        return 0;
+        int totalPoints = 0;
+        for (Card card : cards) {
+            totalPoints += card.getPoints();
+        }
+        return totalPoints;
     }
 
     public int size() {
-        return 0;
+        return cards.size();
     }
 
     public boolean isEmpty() {
-        return false;
+        cards.isEmpty()
     }
 }

@@ -9,19 +9,26 @@ public class ScoreBoard {
     private static int TARGET_SCORE = 500;
     private Map<Player, Integer> scores;
 
-    public int addPoints(Player winner, ArrayList<Player> players) {
-        return 0;
+    public void addPoints(Player winner, ArrayList<Player> players) {
+        for (Player player: players) {
+            scores[winner] += player.getHand().getTotalPoints();
+        }
     }
 
     public int getScore(Player player) {
-        return 0;
+        return scores[player];
     }
 
+
     public boolean hasWinner() {
-        return false;
+        scores.forEach((key, value) -> {
+            if (value >= 500) return true;
+        });
     }
 
     public Player getWinner() {
-        return null;
+        scores.forEach((key, value) -> {
+            if (value >= 500) return key;
+        });
     }
 }
