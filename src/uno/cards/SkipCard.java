@@ -1,13 +1,17 @@
 package uno.cards;
 
+import uno.game.Round;
+
 public class SkipCard extends Card {
 
-    SkipCard(CardColor color, CardValue value) {
+    public SkipCard(CardColor color, CardValue value) {
         super(color, value);
     }
 
     @Override
-    void play() {
-
+    public void play(Round round) {
+        round.advanceTurn();
     }
+
+
 }

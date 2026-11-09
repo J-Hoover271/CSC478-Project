@@ -1,8 +1,10 @@
 package uno.cards;
 
-public abstract class Card {
-    private CardColor color;
-    private CardValue value;
+import uno.game.Round;
+
+abstract public class Card {
+    private final CardColor color;
+    private final CardValue value;
 
     Card(CardColor color, CardValue value) {
         this.color = color;
@@ -18,12 +20,12 @@ public abstract class Card {
     }
 
     public int getPoints() {
-        return 0;
+        return CardPoints.INSTANCE.getPoints(this);
     }
 
     public boolean isWild() {
-        return false;
+        return this.value == CardValue.WILD || this.value == CardValue.WILD_DRAW_FOUR;
     }
 
-    abstract void play();
+    abstract public void play(Round round);
 }

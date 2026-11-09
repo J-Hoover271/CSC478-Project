@@ -1,13 +1,23 @@
 package uno.cards;
 
-public class WildCard extends Card {
+import uno.game.Round;
+import uno.player.Player;
 
+public class WildCard extends Card implements ColorDeclarable {
     WildCard(CardColor color, CardValue value) {
         super(color, value);
     }
 
     @Override
-    void play() {
-
+    public CardColor declareColor(Player player) {
+        return player.promptForColor();
     }
+
+    @Override
+    public void play(Round round) {
+        CardColor selectedColor = declareColor(round.getCurrentPlayer());
+        round.getDiscardPile().setActiveColor(selectedColor);
+    }
+
+
 }
