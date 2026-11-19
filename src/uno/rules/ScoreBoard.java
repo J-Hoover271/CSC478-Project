@@ -24,11 +24,13 @@ public class ScoreBoard {
         scores.forEach((key, value) -> {
             if (value >= 500) return true;
         });
+        return false;
     }
 
     public Player getWinner() {
         scores.forEach((key, value) -> {
             if (value >= 500) return key;
         });
+        throw RuntimeException("looked for game winner that didn't exist");
     }
 }
