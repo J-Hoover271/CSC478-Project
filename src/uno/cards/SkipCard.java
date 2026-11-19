@@ -2,8 +2,8 @@ package uno.cards;
 
 public class SkipCard extends Card {
 
-    SkipCard(CardColor color, CardValue value) {
-        super(color, value);
+    public SkipCard(CardColor color) {
+        super(color, CardValue.SKIP);
     }
 
     @Override

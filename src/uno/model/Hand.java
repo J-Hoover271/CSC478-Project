@@ -5,33 +5,50 @@ import uno.cards.Card;
 import java.util.ArrayList;
 
 public class Hand {
-    private ArrayList<Card> cards;
+    private ArrayList<Card> hand = new ArrayList<>();
 
-    public Hand() {
-
+    public Hand(Deck deck) {
+        for (int i = 0; i < 7; i++) {
+            hand.add(deck.draw());
+        }
     }
 
     public void add(Card card) {
-
+        hand.add(card);
     }
 
     public void remove(Card card) {
-
+        hand.remove(card);
     }
 
-    public ArrayList<Card> getCards() {
-        return null;
+    public ArrayList<Card> getHand() {
+        return hand;
     }
 
     public int getTotalPoints() {
-        return 0;
+        int points = 0;
+        for (Card card : hand) {
+            points += card.getPoints();
+        }
+        return points;
     }
 
     public int size() {
-        return 0;
+        return hand.size();
     }
 
     public boolean isEmpty() {
-        return false;
+        return hand.isEmpty();
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < hand.size(); i++) {
+            sb.append(hand.get(i));
+            if(i < hand.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 }

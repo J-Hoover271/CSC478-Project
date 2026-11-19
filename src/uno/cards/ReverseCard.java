@@ -2,8 +2,8 @@ package uno.cards;
 
 public class ReverseCard extends Card {
 
-    ReverseCard(CardColor color, CardValue value) {
-        super(color, value);
+    public ReverseCard(CardColor color) {
+        super(color, CardValue.REVERSE);
     }
 
     @Override
