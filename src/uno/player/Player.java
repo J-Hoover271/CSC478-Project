@@ -18,5 +18,10 @@ public abstract class Player {
         return hand;
     }
 
+    // to be used to deal the player cards only
+    public setHand(Hand dealtHand) {
+        this.hand = dealHand;
+    }
+
     abstract boolean isHuman();
 }

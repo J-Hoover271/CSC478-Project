@@ -10,7 +10,31 @@ public class Deck {
     private ArrayList<Card> cards;
 
     public Deck() {
+        for (CardColor color : colors) {
+            if (color == CardColor.NONE) {
+                // Add four WILD and four WILD_DRAW_FOUR cards
+                cards.add(new Card(CardColor.NONE, CardValue.WILD));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD_DRAW_FOUR));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD_DRAW_FOUR));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD_DRAW_FOUR));
+                cards.add(new Card(CardColor.NONE, CardValue.WILD_DRAW_FOUR));
+                continue;
+            }
 
+            // One ZERO card per color
+            cards.add(new Card(color, CardValue.ZERO));
+
+            // Two of each number ONE through NINE
+            for (int i = CardValue.ONE.ordinal(); i <= CardValue.DRAW_TWO.ordinal(); i++) {
+                CardValue value = CardValue.values()[i];
+
+                cards.add(new Card(color, value));
+                cards.add(new Card(color, value));
+            }
+        }
     }
 
     public void shuffle() {

@@ -7,10 +7,6 @@ import java.util.ArrayList;
 public class Hand {
     private ArrayList<Card> cards;
 
-    public Hand() {
-
-    }
-
     public void add(Card card) {
         cards.add(card);
     }
