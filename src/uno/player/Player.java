@@ -7,7 +7,8 @@ public abstract class Player {
     protected Hand hand;
 
     public Player(String name) {
-
+        this.name = name;
+        this.hand = new Hand();
     }
 
     public String getName() {

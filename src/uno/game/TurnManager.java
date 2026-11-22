@@ -38,7 +38,9 @@ public class TurnManager {
 
     public void reverse() {
         direction = (direction == Direction.CLOCKWISE) ? Direction.COUNTER_CLOCKWISE : Direction.CLOCKWISE;
-        skip();
+        if (players.size() == 2) {
+            skip();
+        }
     }
 
     public void skip() {

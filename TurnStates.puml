@@ -1,0 +1,28 @@
+@startuml TurnPhase
+title Round turn flow (TurnPhase)
+
+hide empty description
+
+state AWAITING_PLAY : play a legal card, or draw
+state DRAWN_CARD : play the drawn card, or pass
+state CHOOSING_COLOR : pick the next color
+state ROUND_OVER : every action is rejected
+
+[*] --> AWAITING_PLAY : round starts\n(hands dealt, first card flipped)
+
+AWAITING_PLAY --> AWAITING_PLAY : playCard(non-Wild)\n/ apply effect, next player
+AWAITING_PLAY --> AWAITING_PLAY : drawCard() [not playable]\n/ next player
+AWAITING_PLAY --> DRAWN_CARD : drawCard() [playable]
+AWAITING_PLAY --> CHOOSING_COLOR : playCard(Wild)\n[cards left in hand]
+AWAITING_PLAY --> ROUND_OVER : playCard()\n[hand now empty]
+
+DRAWN_CARD --> AWAITING_PLAY : playCard(drawn non-Wild)\n/ apply effect, next player
+DRAWN_CARD --> AWAITING_PLAY : pass()\n/ next player
+DRAWN_CARD --> CHOOSING_COLOR : playCard(drawn Wild)
+
+CHOOSING_COLOR --> AWAITING_PLAY : chooseColor(color)\n/ apply effect, next player
+
+ROUND_OVER --> [*]
+
+note "Any action not shown for a state\nthrows IllegalStateException" as N1
+@enduml
