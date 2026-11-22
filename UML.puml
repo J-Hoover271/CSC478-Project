@@ -12,12 +12,15 @@ skinparam PackageBackgroundColor #F8FAFC
 skinparam nodesep 60
 skinparam ranksep 90
 
-package "uno.card" {
+package "uno.cards" {
     enum CardColor {
         RED
         BLUE
         GREEN
         YELLOW
+        NONE
+
+        +getLabel() : String
     }
 
     enum CardValue {
@@ -36,35 +39,60 @@ package "uno.card" {
         DRAW_TWO
         WILD
         WILD_DRAW_FOUR
+
+        +getLabel() : String
+    }
+
+    enum CardPoints {
+        INSTANCE
+
+        +getPoints(card : Card) : int
+    }
+
+    interface CardEffectContext {
+        +skipNextPlayer() : void
+        +reverseDirection() : void
+        +nextPlayerDraws(count : int) : void
     }
 
     abstract class Card {
         -color : CardColor
         -value : CardValue
 
-        +Card(color : CardColor, value : CardValue)
+        ~Card(color : CardColor, value : CardValue)
         +getColor() : CardColor
         +getValue() : CardValue
         +getPoints() : int
         +isWild() : boolean
-        {abstract} +play() : void
+        +toString() : String
+        {abstract} +play(ctx : CardEffectContext) : void
+    }
+    class NumberCard {
+        +NumberCard(color : CardColor, value : CardValue)
+        +play(ctx : CardEffectContext) : void
     }
     class SkipCard {
-        {abstract} +play() : void
+        +SkipCard(color : CardColor)
+        +play(ctx : CardEffectContext) : void
     }
     class ReverseCard {
-        {abstract} +play() : void
+        +ReverseCard(color : CardColor)
+        +play(ctx : CardEffectContext) : void
     }
     class DrawTwoCard {
-        {abstract} +play() : void
+        +DrawTwoCard(color : CardColor)
+        +play(ctx : CardEffectContext) : void
     }
     class WildCard {
-        {abstract} +play() : void
+        +WildCard()
+        +play(ctx : CardEffectContext) : void
     }
     class WildDrawFourCard {
-        {abstract} +play() : void
+        +WildDrawFourCard()
+        +play(ctx : CardEffectContext) : void
     }
 
+        Card <|-- NumberCard
         Card <|-- SkipCard
         Card <|-- ReverseCard
         Card <|-- DrawTwoCard
@@ -73,11 +101,13 @@ package "uno.card" {
 
         Card --> CardColor
         Card --> CardValue
+        Card ..> CardPoints
+        Card ..> CardEffectContext
 }
 
 package "uno.model" {
     class Deck {
-        -cards : List<Card>
+        -deck : List<Card>
 
         +Deck()
         +shuffle() : void
@@ -86,9 +116,10 @@ package "uno.model" {
         +restock(cards : List<Card>) : void
     }
     class DiscardPile {
-        -cards : List<Card>
+        -discardPile : List<Card>
         -activeColor : CardColor
 
+        +DiscardPile(deck : Deck)
         +place(card : Card) : void
         +getTopCard() : Card
         +getActiveColor() : CardColor
@@ -96,14 +127,16 @@ package "uno.model" {
         +refillDeck() : List<Card>
     }
     class Hand {
-        -cards : List<Card>
+        -hand : ArrayList<Card>
 
+        +Hand()
         +add(card : Card) : void
         +remove(card : Card) : void
-        +getCards() : List<Card>
+        +getHand() : ArrayList<Card>
         +getTotalPoints() : int
         +size() : int
         +isEmpty() : boolean
+        +clear() : void
     }
 
         Deck *-left- Card
@@ -111,7 +144,7 @@ package "uno.model" {
         Hand o-- Card
 }
 
-package "uno.players" {
+package "uno.player" {
     abstract class Player {
         #name : String
         #hand : Hand
@@ -145,7 +178,7 @@ package "uno.rules" {
         + getWinner() : Player
     }
     class MoveValidator {
-        +isLegalPlay(card : Card, top : Card, color : CardColor) : boolean
+        +isLegalPlay(card : Card, color : CardColor) : boolean
         +hasPlayableCard(hand : Hand, top : Card, color : CardColor) : boolean
     }
 }
@@ -162,12 +195,51 @@ package "uno.game" {
         -validator : MoveValidator
         -currentRound : Round
     }
+    enum RoundPhase {
+        AWAITING_PLAY
+        DRAWN_CARD
+        CHOOSING_COLOR
+        ROUND_OVER
+    }
+
+    class TurnManager {
+        -players : List<Player>
+        -currentIndex : int
+        -direction : Direction
+        -skips : int
+
+        +TurnManager(players : List<Player>)
+        +TurnManager(players : List<Player>, startIndex : int)
+        +getCurrentPlayer() : Player
+        +getNextPlayer() : Player
+        +getDirection() : Direction
+        +reverse() : void
+        +skip() : void
+        +endTurn() : void
+        +nextSeat(currentSeat : int, steps : int) : int
+    }
+
     class Round {
         -players : List<Player>
         -deck : Deck
         -discardPile : DiscardPile
-        -direction : Direction
+        -moveValidator : MoveValidator
+        -turnManager : TurnManager
+        -phase : RoundPhase
+        -drawnCard : Card
+        -pendingWild : Card
 
+        +Round(players : List<Player>, validator : MoveValidator)
+        +getPhase() : RoundPhase
+        +getCurrentPlayer() : Player
+        +getDirection() : Direction
+        +playCard(card : Card) : void
+        +drawCard() : void
+        +pass() : void
+        +chooseColor(color : CardColor) : void
+        +skipNextPlayer() : void
+        +reverseDirection() : void
+        +nextPlayerDraws(count : int) : void
     }
 
         Game *-- Round
@@ -180,7 +252,11 @@ package "uno.game" {
         Round *-- DiscardPile
         Round --> Player
         Round -up-> MoveValidator
-        Round -left-> Direction
+        Round *-- TurnManager
+        Round --> RoundPhase
+        Round ..|> CardEffectContext
+        TurnManager -left-> Direction
+        TurnManager --> Player
 }
 
 package "uno.app" {
