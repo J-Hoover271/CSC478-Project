@@ -7,10 +7,8 @@ import java.util.ArrayList;
 public class Hand {
     private ArrayList<Card> hand = new ArrayList<>();
 
-    public Hand(Deck deck) {
-        for (int i = 0; i < 7; i++) {
-            hand.add(deck.draw());
-        }
+    public Hand() {
+
     }
 
     public void add(Card card) {
@@ -39,6 +37,10 @@ public class Hand {
 
     public boolean isEmpty() {
         return hand.isEmpty();
+    }
+
+    public void clear() {
+        hand.clear();
     }
 
     public String toString() {

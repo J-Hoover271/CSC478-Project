@@ -27,7 +27,7 @@ public class Round {
         this.deck = new Deck();
         this.deck.shuffle();
         deal();
-        this.discardPile = new DiscardPile();
+        this.discardPile = new DiscardPile(deck);
         this.turnManager = new TurnManager(this.players);
         this.phase = RoundPhase.AWAITING_PLAY;
     }
@@ -156,7 +156,7 @@ public class Round {
 
     private Card drawFromDeck() {
         if(deck.isEmpty()) {
-            deck.restock(discardPile.refilDeck());
+            deck.restock(discardPile.refillDeck());
         }
         return deck.draw();
     }

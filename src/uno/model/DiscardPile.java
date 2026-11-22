@@ -2,7 +2,6 @@ package uno.model;
 
 import uno.cards.Card;
 import uno.cards.CardColor;
-import uno.game.Round;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ public class DiscardPile {
     public DiscardPile(Deck deck) {
         topCard = deck.draw();
         discardPile.add(topCard);
+        activeColor = topCard.getColor();
     }
 
     public void place(Card card) {
