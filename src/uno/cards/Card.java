@@ -1,7 +1,5 @@
 package uno.cards;
 
-import uno.game.Round;
-
 abstract public class Card {
     private final CardColor color;
     private final CardValue value;

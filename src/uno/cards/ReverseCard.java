@@ -1,8 +1,5 @@
 package uno.cards;
 
-import uno.game.Direction;
-import uno.game.Round;
-
 public class ReverseCard extends Card{
 
     public ReverseCard(CardColor color) {

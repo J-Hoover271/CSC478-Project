@@ -1,8 +1,5 @@
 package uno.cards;
 
-import uno.game.Round;
-import uno.player.Player;
-
 public class DrawTwoCard extends Card {
 
     public DrawTwoCard(CardColor color) {

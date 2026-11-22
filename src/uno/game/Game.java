@@ -27,14 +27,6 @@ public class Game {
 
     }
 
-    public boolean isGameOver() {
-
-    }
-
-    public Player getWinner() {
-
-    }
-
     public Round getCurrentRound() {
         return currentRound;
     }
