@@ -2,8 +2,8 @@ package uno.cards;
 
 public class DrawTwoCard extends Card {
 
-    DrawTwoCard(CardColor color, CardValue value) {
-        super(color, value);
+    public DrawTwoCard(CardColor color) {
+        super(color, CardValue.DRAW_TWO);
     }
 
     @Override

@@ -2,8 +2,8 @@ package uno.cards;
 
 public class WildCard extends Card {
 
-    WildCard(CardColor color, CardValue value) {
-        super(color, value);
+    public WildCard() {
+        super(CardColor.NONE, CardValue.WILD);
     }
 
     @Override

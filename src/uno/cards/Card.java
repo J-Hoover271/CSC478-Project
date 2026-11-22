@@ -9,6 +9,8 @@ public abstract class Card {
         this.value = value;
     }
 
+    abstract void play();
+
     public CardColor getColor() {
         return color;
     }
@@ -25,5 +27,10 @@ public abstract class Card {
         return false;
     }
 
-    abstract void play();
+    public String toString() {
+        if(color == CardColor.NONE) {
+            return value.getLabel();
+        }
+        return color.getLabel() + " " + value.getLabel();
+    }
 }
