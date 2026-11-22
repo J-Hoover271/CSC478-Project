@@ -11,7 +11,7 @@ abstract public class Card {
         this.value = value;
     }
 
-    abstract void play();
+    public abstract void play(CardEffectContext ctx);
 
     public CardColor getColor() {
         return color;

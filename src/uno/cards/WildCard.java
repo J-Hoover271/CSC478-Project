@@ -7,7 +7,5 @@ public class WildCard extends Card {
     }
 
     @Override
-    void play() {
-
-    }
+    public void play(CardEffectContext ctx) { }
 }

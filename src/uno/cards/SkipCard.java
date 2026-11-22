@@ -9,7 +9,7 @@ public class SkipCard extends Card {
     }
 
     @Override
-    void play() {
-
+    public void play(CardEffectContext ctx) {
+        ctx.skipNextPlayer();
     }
 }

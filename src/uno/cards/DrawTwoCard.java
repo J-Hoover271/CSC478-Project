@@ -10,10 +10,9 @@ public class DrawTwoCard extends Card {
     }
 
     @Override
-    public void play(Round round) {
-        Player nextPlayer = round.getNextPlayer();
-        nextPlayer.draw(2, round.getDeck());
-        round.advanceTurn();
+    public void play(CardEffectContext ctx) {
+        ctx.nextPlayerDraws(2);
+        ctx.skipNextPlayer();
     }
 
 

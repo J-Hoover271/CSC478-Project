@@ -6,7 +6,5 @@ public class NumberCard extends Card {
     }
 
     @Override
-    void play() {
-
-    }
+    public void play(CardEffectContext ctx) { }
 }

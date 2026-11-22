@@ -2,6 +2,7 @@ package uno.game;
 
 import uno.cards.Card;
 import uno.cards.CardColor;
+import uno.cards.CardEffectContext;
 import uno.model.Deck;
 import uno.model.DiscardPile;
 import uno.model.Hand;
@@ -10,7 +11,7 @@ import uno.rules.MoveValidator;
 
 import java.util.List;
 
-public class Round {
+public class Round implements CardEffectContext {
     private List<Player> players;
     private Deck deck;
     private DiscardPile discardPile;
@@ -113,19 +114,7 @@ public class Round {
     }
 
     private void applyEffect(Card card) {
-        switch (card.getValue()) {
-            case SKIP -> turnManager.skip();
-            case REVERSE ->  turnManager.reverse();
-            case DRAW_TWO -> {
-                giveCards(turnManager.getNextPlayer(), 2);
-                turnManager.skip();
-            }
-            case WILD_DRAW_FOUR -> {
-                giveCards(turnManager.getNextPlayer(), 4);
-                turnManager.skip();
-            }
-            default -> {}
-        }
+        card.play(this);
     }
 
     private void resolve(Card card) {
@@ -166,4 +155,18 @@ public class Round {
     }
 
 
+    @Override
+    public void skipNextPlayer() {
+        turnManager.skip();
+    }
+
+    @Override
+    public void reverseDirection() {
+        turnManager.reverse();
+    }
+
+    @Override
+    public void nextPlayerDraws(int count) {
+        giveCards(turnManager.getNextPlayer(), count);
+    }
 }

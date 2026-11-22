@@ -10,12 +10,8 @@ public class ReverseCard extends Card{
     }
 
     @Override
-    public void play(Round round) {
-        if(round.getDirection() == Direction.CLOCKWISE) {
-            round.setDirection(Direction.COUNTER_CLOCKWISE);
-        } else {
-            round.setDirection(Direction.CLOCKWISE);
-        }
+    public void play(CardEffectContext ctx) {
+        ctx.reverseDirection();
     }
 
 
