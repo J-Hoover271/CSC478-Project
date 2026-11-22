@@ -1,8 +1,5 @@
 package uno.cards;
 
-import uno.game.Round;
-import uno.player.Player;
-
 public class WildDrawFourCard extends Card {
 
     public WildDrawFourCard() {
